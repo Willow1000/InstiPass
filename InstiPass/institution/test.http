@@ -1,1 +1,36 @@
-GET 
+#Getting access and refresh tokens
+POST http://localhost:8000/api/token/
+Content-Type: application/json
+Accept: application/json
+
+{
+    "username":"admin",
+    "password":"123qwerty"
+}
+
+### Get Institutions
+GET http://localhost:8000/api/institution
+Accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQzMDg2NDgwLCJpYXQiOjE3NDMwNzU2ODAsImp0aSI6ImUyNDFiZWNmZmE4MDRmOGU5ZmRjNTIxMTZjMWQ4ZTk2IiwidXNlcl9pZCI6MTB9.xxKsnSMgJelBodWU5WAdjux75DUXSprIQ5tBHCv0peo
+
+
+### Get Institution Settings
+GET http://localhost:8000/api/institution_settings
+Accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQzMDg2NDgwLCJpYXQiOjE3NDMwNzU2ODAsImp0aSI6ImUyNDFiZWNmZmE4MDRmOGU5ZmRjNTIxMTZjMWQ4ZTk2IiwidXNlcl9pZCI6MTB9.xxKsnSMgJelBodWU5WAdjux75DUXSprIQ5tBHCv0peo
+
+### Post Institution
+POST  http://localhost:8000/api/institution_settings/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQzMDg2NDgwLCJpYXQiOjE3NDMwNzU2ODAsImp0aSI6ImUyNDFiZWNmZmE4MDRmOGU5ZmRjNTIxMTZjMWQ4ZTk2IiwidXNlcl9pZCI6MTB9.xxKsnSMgJelBodWU5WAdjux75DUXSprIQ5tBHCv0peo
+Content-Type: application/json
+Accept: application/json
+
+{
+    "qrcode": false,
+    "barcode": true,
+    "min_admission_year": 1234,
+    "notification_pref": "email",
+    "template": null,
+    "institution": 2
+}
+

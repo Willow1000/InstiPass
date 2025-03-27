@@ -1,9 +1,9 @@
 from django.apps import AppConfig
 
 
-class StudentConfig(AppConfig):
+class IdConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'student'
+    name = 'Id'
 
     def ready(self):
-        from .signals import application_received
+        from Id.signals import id_processing_update, id_ready_update

@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'institution',
     'student',
     'logs',
+    'Id',
     'rest_framework',
     'allauth',
     'allauth.account',
@@ -61,7 +62,8 @@ REST_FRAMEWORK = {
 
 }
 SPECTACULART_SETTINGS = {
-    'TITLE':"InstiPass"
+    'TITLE':"InstiPass",
+    'DESCRIPTION':"An API that allows students to register for their school id online"
 }
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=180),
@@ -173,7 +175,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'GMT'
 
 USE_I18N = True
 
@@ -211,7 +213,7 @@ SITE_ID = 1
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = "wilkinsondari7@gmail.com"
-EMAIL_HOST_PASSWORD = "vsgc hjli dvhl ahwv"
+EMAIL_HOST_PASSWORD = os.environ['HOST_PWD']
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False

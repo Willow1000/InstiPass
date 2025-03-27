@@ -1,4 +1,6 @@
 from django.db import models
+from django.core.validators import MinValueValidator,MaxValueValidator
+from django.utils.timezone import now
 
 # Create your models here.
 class Institution(models.Model):
@@ -82,14 +84,19 @@ class InstitutionSettings(models.Model):
     NOTIFICATION_CHOICES = [
     ("email", "Email"),
     ("sms", "SMS"),
-    ("push", "Push Notification"),
-    ("in_app", "In-App Notification"),
-    ("system", "System Alert"),
+    ("both","Both")
 ]
     qrcode = models.BooleanField()
     barcode = models.BooleanField(default=True)
-    institution = models.ForeignKey(Institution,on_delete=models.CASCADE,unique=True)    
+    institution = models.OneToOneField(Institution,on_delete=models.CASCADE)  
+    min_admission_year = models.IntegerField(validators=[MinValueValidator(2020),MaxValueValidator(now().year)])
     notification_pref = models.CharField(choices=NOTIFICATION_CHOICES,max_length=100)
     template = models.ImageField(upload_to="institution_template",null=True,blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+class InstitutionAdmin(models.Model):
+    first_name = models.CharField(max_length=100)
+    last_name = models.CharField(max_length=100)
+    email = models.EmailField(max_length=100)
+    phone_number = models.CharField(max_length=100)   

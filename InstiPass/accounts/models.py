@@ -27,7 +27,7 @@ class UserManager(BaseUserManager):
         return self.create_user(email, password, **extra_fields)
     
 class User(AbstractUser):
-
+    email = models.EmailField(unique=True)
     permissions = models.ManyToManyField(Permission,related_name="user_permissions") 
     groups = models.ManyToManyField(Group,related_name="user_groups")   
 

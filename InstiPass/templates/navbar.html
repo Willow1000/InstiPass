@@ -10,6 +10,15 @@
             <a class="nav-link active" aria-current="page" href="/">Home</a>
           </li>
           {% if user.is_authenticated == False %}
+          <div class="dropdown">
+            <button class="btn btn-primary dropdown-toggle text-dark" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Who are you
+            </button>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="#">Institution</a></li>
+              <li><a class="dropdown-item" href="#">Student</a></li>
+            </ul>
+          </div>
           <li class="nav-item">
             <a class="nav-link" href="/account/signup/">Register</a>
           </li>
@@ -21,16 +30,12 @@
             <a class="nav-link" href="/account/logout">Logout</a>
           </li>
           {% endif %}
+          <li class="nav-item">
+            <a class="nav-link" href="/about">About</a>
+          </li>
         </ul>
-        <div class="dropdown">
-  <button class="btn btn-primary dropdown-toggle text-dark" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-    Who are you
-  </button>
-  <ul class="dropdown-menu">
-    <li><a class="dropdown-item" href="#">Institution</a></li>
-    <li><a class="dropdown-item" href="#">Student</a></li>
-  </ul>
-</div>
+
+        
       </div>
     </div>
   </nav>

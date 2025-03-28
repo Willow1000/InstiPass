@@ -1,6 +1,7 @@
 from django.db import models
 from django.core.validators import MinValueValidator,MaxValueValidator
 from django.utils.timezone import now
+# from accounts.models import User
 
 # Create your models here.
 class Institution(models.Model):
@@ -16,55 +17,54 @@ class Institution(models.Model):
 ]
 
     COUNTY_CHOICES = [
-    ("Baringo", "Baringo"),
-    ("Bomet", "Bomet"),
-    ("Bungoma", "Bungoma"),
-    ("Busia", "Busia"),
-    ("Elgeyo Marakwet", "Elgeyo Marakwet"),
-    ("Embu", "Embu"),
-    ("Garissa", "Garissa"),
-    ("Homa Bay", "Homa Bay"),
-    ("Isiolo", "Isiolo"),
-    ("Kajiado", "Kajiado"),
-    ("Kakamega", "Kakamega"),
-    ("Kericho", "Kericho"),
-    ("Kiambu", "Kiambu"),
-    ("Kilifi", "Kilifi"),
-    ("Kirinyaga", "Kirinyaga"),
-    ("Kisii", "Kisii"),
-    ("Kisumu", "Kisumu"),
-    ("Kitui", "Kitui"),
+    ("Mombasa", "Mombasa"),
     ("Kwale", "Kwale"),
-    ("Laikipia", "Laikipia"),
+    ("Kilifi", "Kilifi"),
+    ("Tana River", "Tana River"),
     ("Lamu", "Lamu"),
-    ("Machakos", "Machakos"),
-    ("Makueni", "Makueni"),
+    ("Taita Taveta", "Taita Taveta"),
+    ("Garissa", "Garissa"),
+    ("Wajir", "Wajir"),
     ("Mandera", "Mandera"),
     ("Marsabit", "Marsabit"),
+    ("Isiolo", "Isiolo"),
     ("Meru", "Meru"),
-    ("Migori", "Migori"),
-    ("Mombasa", "Mombasa"),
-    ("Murang'a", "Murang'a"),
-    ("Nairobi", "Nairobi"),
-    ("Nakuru", "Nakuru"),
-    ("Nandi", "Nandi"),
-    ("Narok", "Narok"),
-    ("Nyamira", "Nyamira"),
+    ("Tharaka-Nithi", "Tharaka-Nithi"),
+    ("Embu", "Embu"),
+    ("Kitui", "Kitui"),
+    ("Machakos", "Machakos"),
+    ("Makueni", "Makueni"),
     ("Nyandarua", "Nyandarua"),
     ("Nyeri", "Nyeri"),
-    ("Samburu", "Samburu"),
-    ("Siaya", "Siaya"),
-    ("Taita Taveta", "Taita Taveta"),
-    ("Tana River", "Tana River"),
-    ("Tharaka Nithi", "Tharaka Nithi"),
-    ("Trans Nzoia", "Trans Nzoia"),
+    ("Kirinyaga", "Kirinyaga"),
+    ("Murang'a", "Murang'a"),
+    ("Kiambu", "Kiambu"),
     ("Turkana", "Turkana"),
-    ("Uasin Gishu", "Uasin Gishu"),
-    ("Vihiga", "Vihiga"),
-    ("Wajir", "Wajir"),
     ("West Pokot", "West Pokot"),
-    ]
-
+    ("Samburu", "Samburu"),
+    ("Trans Nzoia", "Trans Nzoia"),
+    ("Uasin Gishu (Eldoret)", "Uasin Gishu (Eldoret)"),
+    ("Elgeyo Marakwet", "Elgeyo Marakwet"),
+    ("Nandi", "Nandi"),
+    ("Baringo", "Baringo"),
+    ("Laikipia", "Laikipia"),
+    ("Nakuru", "Nakuru"),
+    ("Narok", "Narok"),
+    ("Kajiado", "Kajiado"),
+    ("Kericho", "Kericho"),
+    ("Bomet", "Bomet"),
+    ("Kakamega", "Kakamega"),
+    ("Vihiga", "Vihiga"),
+    ("Bungoma", "Bungoma"),
+    ("Busia", "Busia"),
+    ("Siaya", "Siaya"),
+    ("Kisumu", "Kisumu"),
+    ("Homa Bay", "Homa Bay"),
+    ("Migori", "Migori"),
+    ("Kisii", "Kisii"),
+    ("Nyamira", "Nyamira"),
+    ("Nairobi", "Nairobi"),
+]
 
     name = models.CharField(max_length=100)
     region = models.CharField(max_length=100,choices=REGION_CHOICES)
@@ -72,7 +72,7 @@ class Institution(models.Model):
     address = models.CharField(max_length=100)
     email = models.EmailField()
     tel = models.CharField(max_length=70)
-    
+    # admin = models.ForeignKey(User,on_delete=models.CASCADE,related_name="institution_admin",null=True,blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -95,8 +95,4 @@ class InstitutionSettings(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-class InstitutionAdmin(models.Model):
-    first_name = models.CharField(max_length=100)
-    last_name = models.CharField(max_length=100)
-    email = models.EmailField(max_length=100)
-    phone_number = models.CharField(max_length=100)   
+  

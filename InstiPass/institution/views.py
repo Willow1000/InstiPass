@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from rest_framework import viewsets
-from django.views.generic import CreateView,UpdateView,DeleteView,DetailView
+from django.views.generic import CreateView,UpdateView,TemplateView
 from rest_framework.permissions import IsAuthenticated,IsAdminUser
 from django.urls import reverse_lazy
 from .models import *
@@ -30,6 +30,19 @@ class CreateInstitutionSettings(CreateView):
     fields = ['institution','notification_pref','template','barcode','qrcode','min_admission_year']
     template_name = "register_institution_settings.html"    
 
+class UpdateInstitution(UpdateView):
+    success_url = reverse_lazy("home")    
+    model = Institution
+    fields = ['name','region','county','address','email','tel']
+    template_name = "register_institution.html"
+class UpdateInstitutionSettings(UpdateView):
+    success_url = reverse_lazy("home")    
+    model = InstitutionSettings
+    fields = ['institution','notification_pref','template','barcode','qrcode','min_admission_year']
+    template_name = "register_institution_settings.html"
+
+class HomeView(TemplateView):
+    template_name = 'home.html'    
 def custom_404_view(request, exception):
     return render(request, "404.html", status=404)
 

@@ -20,6 +20,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 DEBUG = True
 
 ALLOWED_HOSTS = []
+AUTHENTICATION_BACKENDS = [
+    "django.contrib.auth.backends.ModelBackend",
+    "allauth.account.auth_backends.AuthenticationBackend",
+]
 
 
 # Application definition
@@ -41,11 +45,36 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
+    # 'rest_framework.authtoken',
     'rest_framework_simplejwt',
     'rest_framework_simplejwt.token_blacklist', 
     'drf_spectacular',
     # 'drf_spectacular_sidecar',
 ]
+# AUTH
+ACCOUNT_FORMS = {
+    'add_email': 'allauth.account.forms.AddEmailForm',
+    'change_password': 'allauth.account.forms.ChangePasswordForm',
+    'confirm_login_code': 'allauth.account.forms.ConfirmLoginCodeForm',
+    'login': 'allauth.account.forms.LoginForm',
+    'request_login_code': 'allauth.account.forms.RequestLoginCodeForm',
+    'reset_password': 'allauth.account.forms.ResetPasswordForm',
+    'reset_password_from_key': 'allauth.account.forms.ResetPasswordKeyForm',
+    'set_password': 'allauth.account.forms.SetPasswordForm',
+    'signup': 'allauth.account.forms.SignupForm',
+    'user_token': 'allauth.account.forms.UserTokenForm',
+}
+LOGIN_REDIRECT_URL = "/"
+ACCOUNT_SIGNUP_REDIRECT_URL = "/"
+ACCOUNT_LOGOUT_REDIRECT_URL = "/"
+LOGIN_REDIRECT_URL = "/"
+SIGN_UP_REDIRECT_URL = "/"
+# ACCOUNT_EMAIL_REQUIRED = True
+# ACCOUNT_SIGNUP_FIELDS = ['email*', 'username*', 'password1*', 'password2*']
+AUTH_USER_MODEL = 'accounts.User'
+# ACCOUNT_AUTHENTICATION_METHODS = "user_email"
+# ACCOUNT_USER_MODEL_USERNAME_FIELD="username"
+# ACCOUNT_EMAIL_VERIFICATION = 'optional'
 SESSION_COOKIE_AGE = 60  # 1 hour
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 REST_FRAMEWORK = {
@@ -61,6 +90,7 @@ REST_FRAMEWORK = {
     'DEFAULT_SCHEMA_CLASS':"drf_spectacular.openapi.AutoSchema",
 
 }
+
 SPECTACULART_SETTINGS = {
     'TITLE':"InstiPass",
     'DESCRIPTION':"An API that allows students to register for their school id online"
@@ -96,6 +126,44 @@ SIMPLE_JWT = {
     'SLIDING_TOKEN_LIFETIME': timedelta(minutes=5),
     'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
 }
+AUTH_PASSWORD_VALIDATORS = [
+    {
+        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+    },
+]
+
+
+# Internationalization
+# https://docs.djangoproject.com/en/5.1/topics/i18n/
+
+LANGUAGE_CODE = 'en-us'
+
+TIME_ZONE = 'GMT'
+
+USE_I18N = True
+
+USE_TZ = True
+
+
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/5.1/howto/static-files/
+
+STATIC_URL = 'static/'
+
+# Default primary key field type
+# https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
+
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+SITE_ID = 1
 
 
 MIDDLEWARE = [
@@ -154,61 +222,8 @@ DATABASES = {
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
 
-AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
-]
 
 
-# Internationalization
-# https://docs.djangoproject.com/en/5.1/topics/i18n/
-
-LANGUAGE_CODE = 'en-us'
-
-TIME_ZONE = 'GMT'
-
-USE_I18N = True
-
-USE_TZ = True
-
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/5.1/howto/static-files/
-
-STATIC_URL = 'static/'
-LOGIN_REDIRECT_URL = "/"
-ACCOUNT_SIGNUP_REDIRECT_URL = "../login/"
-ACCOUNT_LOGOUT_REDIRECT_URL = "/"
-# Default primary key field type
-# https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
-
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-# AUTH
-AUTH_USER_MODEL = "accounts.User"
-ACCOUNT_FORMS = {
-    'add_email': 'allauth.account.forms.AddEmailForm',
-    'change_password': 'allauth.account.forms.ChangePasswordForm',
-    'confirm_login_code': 'allauth.account.forms.ConfirmLoginCodeForm',
-    'login': 'allauth.account.forms.LoginForm',
-    'request_login_code': 'allauth.account.forms.RequestLoginCodeForm',
-    'reset_password': 'allauth.account.forms.ResetPasswordForm',
-    'reset_password_from_key': 'allauth.account.forms.ResetPasswordKeyForm',
-    'set_password': 'allauth.account.forms.SetPasswordForm',
-    'signup': 'allauth.account.forms.SignupForm',
-    'user_token': 'allauth.account.forms.UserTokenForm',
-}
-SITE_ID = 1
 #MAIL
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
@@ -218,5 +233,6 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
 
+#MEDIA
 MEDIA_ROOT = os.path.join(BASE_DIR,"media")
 MEDIA_URL='/media/'

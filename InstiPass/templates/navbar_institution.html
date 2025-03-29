@@ -9,15 +9,24 @@
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="/">Home</a>
           </li>
-          <div class="dropdown">
-            <button class="btn btn-primary dropdown-toggle text-dark" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Who are you
-            </button>
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="institution/">Institution</a></li>
-              <li><a class="dropdown-item" href="student/">Student</a></li>
-            </ul>
-          </div>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="register">Create Profile</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="settings/register">Create Settings</a>
+          </li>
+          {% if user.is_authenticated == False %}
+          <li class="nav-item">
+            <a class="nav-link" href="accounts/signup/">Register</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="accounts/login/">Login</a>
+          </li>
+          {% else %}
+          <li class="nav-item">
+            <a class="nav-link" href="accounts/logout">Logout</a>
+          </li>
+          {% endif %}
           <li class="nav-item">
             <a class="nav-link" href="/about">About</a>
           </li>

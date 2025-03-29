@@ -13,7 +13,7 @@ class StudentViewSet(viewsets.ModelViewSet):
 class CreateStudentView(CreateView):
     template_name = 'student_registration.html'
     model = Student
-    success_url = reverse_lazy("home")
+    success_url = reverse_lazy("student_home")
     fields = [
     "institution",
     "reg_no",
@@ -30,7 +30,7 @@ class CreateStudentView(CreateView):
 class UpdateStudentView(UpdateView):
     template_name = 'student_registration.html'
     model = Student
-    success_url = reverse_lazy("home")
+    success_url = reverse_lazy("student_home")
     fields = [
     "institution",
     "reg_no",
@@ -45,4 +45,4 @@ class UpdateStudentView(UpdateView):
     ]
 
 class HomeView(TemplateView):
-    template_name = 'home.html'
+    template_name = 'student_home.html'

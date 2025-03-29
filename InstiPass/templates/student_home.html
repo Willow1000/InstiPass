@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% block title %} Home {% endblock %}
+{% block content %}
+
+    {% include "navbar_student.html" %}
+    <style>
+
+        body {
+            background-color: #fff;
+        }
+        .card {
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body class="">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8 text-center">
+                <h2 class="mb-4">Welcome to Your Student Dashboard</h2>
+                <p class="text-muted">Manage your student profile, track your ID status, and receive updates from your institution.</p>
+            </div>
+        </div>
+        
+        <div class="row mt-4 h-50">
+            <div class="col-md-4">
+                <div class="card p-3">
+                    <h5 class="card-title">Profile Management</h5>
+                    <p class="card-text">Update your personal details and upload required documents.</p>
+                    <a href="#" class="btn btn-primary">Manage Profile</a>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card p-3">
+                    <h5 class="card-title">ID Status</h5>
+                    <p class="card-text">Check the status of your student ID application and processing updates.</p>
+                    <a href="#" class="btn btn-primary">View Status</a>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card p-3">
+                    <h5 class="card-title">Notifications</h5>
+                    <p class="card-text">Stay updated with important announcements and messages from your institution.</p>
+                    <a href="#" class="btn btn-primary">View Notifications</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+   
+   
+{% endblock %}

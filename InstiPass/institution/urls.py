@@ -15,12 +15,14 @@ router.register("institution",InstitutionViewSet,basename="institutionApi")
 router.register("institution_settings",InstitutionSettingsViewSet,basename="institutionSettingsApi")
 
 urlpatterns = [
-    path('',HomeView.as_view(),name="home"),
-    path("accounts/",include("allauth.urls")),
+    path('',HomeView.as_view(),name="institution_home"),
+    path("accounts/",include("allauth.urls"),name="accounts"),
+    path('accounts/',include('django.contrib.auth.urls')),
     path('register',CreateInstitution.as_view(),
     name="create_institution"),
     path('settings/register',CreateInstitutionSettings.as_view(),name="create_institution_settings"),
     path("api/",include(router.urls)),
+    path("api/institution_stats",IdProcessStatsAPIView.as_view(),name="id_process_stats"),
     path("update/<int:pk>",UpdateInstitution.as_view(),name="update_institution"),
     path("settings/update/<int:pk>",UpdateInstitutionSettings.as_view(),name="update_institution_settings"),
 ]

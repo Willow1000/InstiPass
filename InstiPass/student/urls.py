@@ -7,7 +7,7 @@ from .views import *
 router = DefaultRouter()
 router.register('student',StudentViewSet,basename='studentApi')
 urlpatterns = [
-    path("",HomeView.as_view(),name='home'),
+    path("",HomeView.as_view(),name='student_home'),
     path("accounts/",include("allauth.urls")),
     path("api/",include(router.urls)),
     path("register",CreateStudentView.as_view(),name="student_registration"),

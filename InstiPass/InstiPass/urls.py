@@ -13,8 +13,10 @@ urlpatterns = [
     path("",include("accounts.urls")),
     path("institution/",include('institution.urls')),
     path("student/",include('student.urls')),
+    # JWT URLS
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    # DRF Spectacular URLs (no UI):
     path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
     # Optional UI:
     path('api/schema/swagger-ui/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),

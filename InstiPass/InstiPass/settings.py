@@ -3,31 +3,13 @@ import os
 from dotenv import load_dotenv
 import time
 from datetime import timedelta
-
+# making variables in the .env accessible to os.environ
 load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
-
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = []
-AUTHENTICATION_BACKENDS = [
-    "django.contrib.auth.backends.ModelBackend",
-    "allauth.account.auth_backends.AuthenticationBackend",
-]
-
-
 # Application definition
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -51,7 +33,10 @@ INSTALLED_APPS = [
     'drf_spectacular',
     # 'drf_spectacular_sidecar',
 ]
-# AUTH
+# SECURITY
+SECRET_KEY = os.environ['SECRET_KEY']
+
+# AUTHENTICATION
 ACCOUNT_FORMS = {
     'add_email': 'allauth.account.forms.AddEmailForm',
     'change_password': 'allauth.account.forms.ChangePasswordForm',
@@ -64,19 +49,32 @@ ACCOUNT_FORMS = {
     'signup': 'allauth.account.forms.SignupForm',
     'user_token': 'allauth.account.forms.UserTokenForm',
 }
+# Quick-start development settings - unsuitable for production
+# See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
+
+# SECURITY WARNING: keep the secret key used in production secret!
+
+
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = True
+
+ALLOWED_HOSTS = []
+AUTHENTICATION_BACKENDS = [
+    "django.contrib.auth.backends.ModelBackend",
+    "allauth.account.auth_backends.AuthenticationBackend",
+]
+# ALLAUTH SETTINGS
 LOGIN_REDIRECT_URL = "/"
 ACCOUNT_SIGNUP_REDIRECT_URL = "/"
 ACCOUNT_LOGOUT_REDIRECT_URL = "/"
-LOGIN_REDIRECT_URL = "/"
-SIGN_UP_REDIRECT_URL = "/"
-# ACCOUNT_EMAIL_REQUIRED = True
-# ACCOUNT_SIGNUP_FIELDS = ['email*', 'username*', 'password1*', 'password2*']
+ACCOUNT_AUTHENTICATED_LOGIN_REDIRECTS = True
+ACCOUNT_AUTHENTICATED_REDIRECT_URL = "/"
 AUTH_USER_MODEL = 'accounts.User'
-# ACCOUNT_AUTHENTICATION_METHODS = "user_email"
-# ACCOUNT_USER_MODEL_USERNAME_FIELD="username"
-# ACCOUNT_EMAIL_VERIFICATION = 'optional'
+SITE_ID = 1
+# SESSION-BASED SECURITY SETTINGS
 SESSION_COOKIE_AGE = 60  # 1 hour
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+
 REST_FRAMEWORK = {
     'DEFAULT_RENDERER_CLASSES': (
         'rest_framework.renderers.JSONRenderer',  # Ensure this is present
@@ -91,10 +89,7 @@ REST_FRAMEWORK = {
 
 }
 
-SPECTACULART_SETTINGS = {
-    'TITLE':"InstiPass",
-    'DESCRIPTION':"An API that allows students to register for their school id online"
-}
+# JWT SETTINGS
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=180),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=50),
@@ -126,6 +121,10 @@ SIMPLE_JWT = {
     'SLIDING_TOKEN_LIFETIME': timedelta(minutes=5),
     'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
 }
+
+# Password validation
+# https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
+
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -163,7 +162,7 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-SITE_ID = 1
+
 
 
 MIDDLEWARE = [
@@ -181,7 +180,7 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'InstiPass.urls'
-
+# TEMPLATES SETTINGS
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -201,9 +200,8 @@ TEMPLATES = [
 WSGI_APPLICATION = 'InstiPass.wsgi.application'
 
 
-# Database
+# DATABASE
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
-SECRET_KEY = os.environ['SECRET_KEY']
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
@@ -217,11 +215,6 @@ DATABASES = {
         }
     }
 }
-
-
-# Password validation
-# https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
-
 
 
 #MAIL

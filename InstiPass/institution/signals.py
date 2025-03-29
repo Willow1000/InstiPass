@@ -16,11 +16,25 @@ def institution_profile(sender,instance,created,**kwargs):
                 [instance.email],
                 fail_silently=False
             )
+        send_mail(
+                f"You have been selected as the admin for {instance.name}  Instipass",
+                "Stay tuned for more updates",
+                "admin@django.com",
+                [instance.admin_email],
+                fail_silently=False
+            )
 
     else:
         send_mail(
                 "Your profile has been updated successfully",
                 "Your profile has been updated. If you did not make this change, please contact us",
+                "admin@django.com",
+                [instance.email],
+                fail_silently=False
+            )    
+        send_mail(
+                f"{instance.name}'s profile has been updated successfully",
+                "If you did not make this change, please contact us",
                 "admin@django.com",
                 [instance.email],
                 fail_silently=False
@@ -37,6 +51,13 @@ def institution_settings(sender,instance,created,**kwargs):
                 [instance.institution.email],
                 fail_silently=False
             )
+        send_mail(
+                f"{instance.institution.name}'s preferences have been successfully received.",
+                "We will update you on the progress",
+                "admin@django.com",
+                [instance.institution.admin_email],
+                fail_silently=False
+            )
         
     else:
         send_mail(
@@ -44,5 +65,12 @@ def institution_settings(sender,instance,created,**kwargs):
                 "Your institution settings have been updated. If you did not make this change, please contact us",
                 "admin@django.com",
                 [instance.institution.email],
+                fail_silently=False
+            ) 
+        send_mail(
+                f"{instance.name}'s settings have been updated successfully",
+                "Your institution's settings have been updated. If you did not make this change, please contact us",
+                "admin@django.com",
+                [instance.institution.admin_email],
                 fail_silently=False
             ) 

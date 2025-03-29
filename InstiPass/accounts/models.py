@@ -37,7 +37,7 @@ class User(AbstractUser):
     permissions = models.ManyToManyField(Permission,related_name="student_user_permissions") 
     groups = models.ManyToManyField(Group,related_name="student_user_groups")   
     objects = UserManager()
-    # REQUIRED_FIELDS = ['email']
+    REQUIRED_FIELDS = ['email']
 
     def __str__(self):
         return self.username

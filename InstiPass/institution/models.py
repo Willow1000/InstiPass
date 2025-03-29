@@ -71,6 +71,8 @@ class Institution(models.Model):
     county = models.CharField(max_length=100,choices=COUNTY_CHOICES)
     address = models.CharField(max_length=100)
     email = models.EmailField()
+    admin_email=models.EmailField(max_length=100)
+    admin_tell = models.CharField(max_length=70)
     tel = models.CharField(max_length=70)
     # admin = models.ForeignKey(User,on_delete=models.CASCADE,related_name="institution_admin",null=True,blank=True)
     created_at = models.DateTimeField(auto_now_add=True)

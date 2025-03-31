@@ -24,30 +24,27 @@ class InstitutionSettingsViewSet(viewsets.ModelViewSet):
     http_method_names = ['get','post','put','patch','delete']
     permission_classes = [IsAuthenticated]
 
-class CreateInstitution(LoginRequiredMixin,CreateView):
+class CreateInstitution(CreateView):
     success_url = reverse_lazy("institution_home")    
     model = Institution
     fields = ['name','region','county','address','email','tel','admin_email','admin_tell']
     template_name = "register_institution.html"
-    login_url = "accounts/login/"
-    redirect_field_name = "next"
  
    
-class CreateInstitutionSettings(LoginRequiredMixin,CreateView):
+class CreateInstitutionSettings(CreateView):
     success_url = reverse_lazy("institution_home")    
     model = InstitutionSettings
     fields = ['institution','notification_pref','template','barcode','qrcode','min_admission_year']
     template_name = "register_institution_settings.html"    
-    login_url = "../accounts/login/"
-    redirect_field_name = "next"
+ 
 
-class UpdateInstitution(LoginRequiredMixin,UpdateView):
+class UpdateInstitution(UpdateView):
     success_url = reverse_lazy("home")    
     model = Institution
     fields = ['name','region','county','address','email','tel']
     template_name = "register_institution.html"
  
-class UpdateInstitutionSettings(LoginRequiredMixin,UpdateView):
+class UpdateInstitutionSettings(UpdateView):
     success_url = reverse_lazy("home")    
     model = InstitutionSettings
     fields = ['institution','notification_pref','template','barcode','qrcode','min_admission_year']

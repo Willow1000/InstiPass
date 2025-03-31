@@ -89,10 +89,13 @@ API Endpoints
 Usage
 
 1. Students register and submit their details via the API.
-
+Urls:
+student/register - registering
 
 2. Institutions review and approve registrations.
-
+Urls:
+institution/register - register institution
+institution/settings/register - register institution settings
 
 3. Students receive notifications on their ID issuance status.
 

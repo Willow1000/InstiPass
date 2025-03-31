@@ -1,6 +1,7 @@
 from rest_framework import viewsets
 from .models import *
 from .serializers import *
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import CreateView,UpdateView,TemplateView
 from django.urls import reverse_lazy
 
@@ -10,7 +11,7 @@ class StudentViewSet(viewsets.ModelViewSet):
     serializer_class = StudentSerializer
 
 
-class CreateStudentView(CreateView):
+class CreateStudentView(LoginRequiredMixin,CreateView):
     template_name = 'student_registration.html'
     model = Student
     success_url = reverse_lazy("student_home")
@@ -26,6 +27,8 @@ class CreateStudentView(CreateView):
     "phone_number",
     "photo",
     ]
+    login_url = "accounts/login/"
+    redirect_field_name = "next"
 
 class UpdateStudentView(UpdateView):
     template_name = 'student_registration.html'

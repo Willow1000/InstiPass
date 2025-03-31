@@ -2,4 +2,24 @@
 {% block title %} Home {% endblock %}
 {% block content %}
     {% include "navbar.html" %}
+    <div class="container">
+        <h1 class="text-center">Welcome to InstiPass</h1>
+        <p class="text-center">Your one-stop solution for student ID management.</p>
+        <div class="row mt-4">
+            <div class="col-md-4 text-center">
+                <h3>For Students</h3>
+                <p>Register, manage your profile, and track your ID status.</p>
+                <a href="{% url 'student_registration' %}" class="btn btn-primary">Get Started</a>
+            </div>
+            <div class="col-md-4 text-center">
+                <h3>For Institutions</h3>
+                <p>Manage student registrations and settings efficiently.</p>
+                <a href="{% url 'institution_home' %}" class="btn btn-primary">Dashboard</a>
+            </div>
+            <div class="col-md-4 text-center">
+                <h3>Contact Us</h3>
+                <p>Need help? Reach out to our support team.</p>
+                <a href='#' class="btn btn-primary">Contact Support</a>
+            </div>
+        </div>
 {% endblock %}

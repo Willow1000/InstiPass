@@ -25,7 +25,7 @@ Database: MySQL
 
 Email: django.core.mail
 
-Authentication: JWT (JSON Web Tokens)
+Authentication: JWT (JSON Web Tokens) for API Endpoints & Oauth for Views 
 
 Frontend: Bootstrap
 
@@ -36,7 +36,7 @@ Prerequisites
 
 Ensure you have the following installed:
 
-Python (>=3.8)
+Python (>=3.8) ideally (3.13)
 
 MySQL
 
@@ -64,8 +64,6 @@ pip install -r requirements.txt
 
 4. Configure environment variables in a .env file:
 
-SECRET_KEY=your_secret_key
-DATABASE_URL=postgres://user:password@localhost:5432/instipass
 
 
 5. Apply database migrations:

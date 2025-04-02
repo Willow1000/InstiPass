@@ -91,7 +91,7 @@ Urls:
 
 
 # Api
-/student/api/student - list of students as json objects
+/student/api/student - handles student profile
 
 # Views
 /student/register - registering
@@ -101,8 +101,8 @@ Urls:
 Urls:
 
 # Api
-institution/api/institution - list of institutions as json objects
-institution/api/institution_settings - list of institutions' settings as json objects
+institution/api/institution - handles institution profiles
+institution/api/institution_settings - handles institution settings
 institution/api/institution_stats - summary on the Id registration progress of the logged in institution
 
 # Views

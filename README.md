@@ -102,11 +102,14 @@ Urls:
 
 # Api
 institution/api/institution - handles institution profiles
+
 institution/api/institution_settings - handles institution settings
+
 institution/api/institution_stats - summary on the Id registration progress of the logged in institution
 
 # Views
 /institution/register - register institution
+
 /institution/settings/register - register institution settings
 
 # API ENDPOINTS SUMMARY

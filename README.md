@@ -84,22 +84,23 @@ python manage.py runserver
 
 # Endpoints
 
-Usage
-
+Usage:
+# STUDENT
 1. Students register and submit their details via the API.
 Urls:
 
 
-# API
+# Api
 /student/api/student - list of students as json objects
 
-# View
+# Views
 /student/register - registering
 
+#INSTITUTION
 2. Institutions review and approve registrations.
 Urls:
 
-# API
+# Api
 institution/api/institution - list of institutions as json objects
 institution/api/institution_settings - list of institutions' settings as json objects
 institution/api/institution_stats - summary on the Id registration progress of the logged in institution

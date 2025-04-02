@@ -94,7 +94,7 @@ Urls:
 /student/api/student - handles student profile
 
 # Views
-/student/register - registering
+/student/register - registering student profile
 
 # INSTITUTION
 2. Institutions review and approve registrations.
@@ -108,7 +108,7 @@ institution/api/institution_settings - handles institution settings
 institution/api/institution_stats - summary on the Id registration progress of the logged in institution
 
 # Views
-/institution/register - register institution
+/institution/register - register institution profile
 
 /institution/settings/register - register institution settings
 
@@ -120,7 +120,21 @@ institution/api/institution_stats - summary on the Id registration progress of t
 
 4. The system logs API access and admin actions for security and monitoring.
 
+# Creating User
+To create register as a Student User:
 
+/student/accounts/signup/ 
+
+To create an Institution User:
+
+/institution/accounts/signup/
+
+Alternatively
+1. Head to the root homepage /  
+2. Click on "Who are you" on the navbar
+3. Select the option of your choice
+4. Proceed to signup and submit the form
+5. Use your credentials to obtain tokens for you to access the Api endpoints
 
 # Future Enhancements
 Integrating with school DBs for easy data retrieval

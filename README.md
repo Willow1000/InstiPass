@@ -101,11 +101,11 @@ Urls:
 Urls:
 
 # Api
-institution/api/institution - handles institution profiles
+/institution/api/institution - handles institution profiles
 
-institution/api/institution_settings - handles institution settings
+/institution/api/institution_settings - handles institution settings
 
-institution/api/institution_stats - summary on the Id registration progress of the logged in institution
+/institution/api/institution_stats - summary on the Id registration progress of the logged in institution
 
 # Views
 /institution/register - register institution profile

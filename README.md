@@ -82,30 +82,33 @@ python manage.py runserver
 
 
 
-# API Endpoints
+# Endpoints
 
 Usage
 
 1. Students register and submit their details via the API.
 Urls:
-<!-- Views -->
-/student/register - registering
 
-<!-- API -->
+
+# API
 /student/api/student - list of students as json objects
+
+# View
+/student/register - registering
 
 2. Institutions review and approve registrations.
 Urls:
-<!-- Views -->
-/institution/register - register institution
-/institution/settings/register - register institution settings
 
-<!-- API -->
+# API
 institution/api/institution - list of institutions as json objects
 institution/api/institution_settings - list of institutions' settings as json objects
 institution/api/institution_stats - summary on the Id registration progress of the logged in institution
 
-<!-- SUMMARY -->
+# Views
+/institution/register - register institution
+/institution/settings/register - register institution settings
+
+# API ENDPOINTS SUMMARY
 /api/schema/redoc or /api/schema/swagger-ui - for a more informative and nicer looking summary of the API endpoints
 
 3. Students receive notifications on their ID issuance status.

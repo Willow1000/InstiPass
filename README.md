@@ -96,7 +96,7 @@ Urls:
 # Views
 /student/register - registering
 
-#INSTITUTION
+# INSTITUTION
 2. Institutions review and approve registrations.
 Urls:
 

@@ -9,7 +9,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .serializers import *
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404,redirect
 import requests
 import json
 from django.contrib import messages
@@ -37,8 +37,18 @@ class CreateInstitution(CreateView):
 class CreateInstitutionSettings(CreateView):
     success_url = reverse_lazy("institution_home")    
     model = InstitutionSettings
-    fields = ['institution','notification_pref','template','barcode','qrcode','min_admission_year']
+    fields = ['notification_pref','template','barcode','qrcode','min_admission_year']
     template_name = "register_institution_settings.html"    
+
+    def form_valid(self, form):
+        found = Institution.objects.filter(email = self.request.user.email)
+
+        if found:
+            form.instance.institution = found[0]
+        else:
+            messages.warning(message="Kindly create a profile for your institution first",request=self.request)    
+            return redirect('institution_home')
+        return super().form_valid(form)
  
 
 class UpdateInstitution(UpdateView):
@@ -50,7 +60,7 @@ class UpdateInstitution(UpdateView):
 class UpdateInstitutionSettings(UpdateView):
     success_url = reverse_lazy("home")    
     model = InstitutionSettings
-    fields = ['institution','notification_pref','template','barcode','qrcode','min_admission_year']
+    fields = ['notification_pref','template','barcode','qrcode','min_admission_year']
     template_name = "register_institution_settings.html"
   
 class IdProcessStatsAPIView(APIView):
@@ -82,14 +92,13 @@ class HomeView(TemplateView):
         stats['process'] = data.get("Ids_being_processed")
         stats["ready"] = data.get("Ids_ready")
         found = Institution.objects.filter(email=self.request.user.email)
-        settings = InstitutionSettings.objects.filter(institution = found[0])
         if found:
             stats['exists_institution'] = True
             stats['pk'] = found[0].pk
-
-        if settings:
-            stats['exists_settings'] = True
-            stats['s_pk'] = settings[0].pk
+            settings = InstitutionSettings.objects.filter(institution = found[0])
+            if settings:
+                stats['exists_settings'] = True
+                stats['s_pk'] = settings[0].pk
 
         
         return stats

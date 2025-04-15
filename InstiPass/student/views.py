@@ -35,7 +35,6 @@ class UpdateStudentView(UpdateView):
     model = Student
     success_url = reverse_lazy("student_home")
     fields = [
-    "institution",
     "reg_no",
     "first_name",
     "last_name",

@@ -4,36 +4,89 @@
 
     {% include "navbar_student.html" %}
   
-    <div class="container">
+    <div class="container mt-5">
         <div class="row justify-content-center">
             <div class="col-md-8 text-center">
-                <h2 class="mb-4">Welcome to Your Student Dashboard</h2>
-                <p class="text-muted">Manage your student profile, track your ID status, and receive updates from your institution.</p>
+                <h2 class="mb-4 display-4 text-primary">Welcome to Your Student Dashboard</h2>
+                <p class="text-muted lead">Manage your student profile, track your ID status, and receive updates from your institution.</p>
             </div>
         </div>
         
-        <div class="row mt-4 h-50">
+        <div class="row mt-5">
             <div class="col-md-4">
-                <div class="card p-3">
-                    <h5 class="card-title">Profile Management</h5>
-                    <p class="card-text">Update your personal details and upload required documents.</p>
-                    <a href="#" class="btn btn-primary">Manage Profile</a>
+                <div class="card shadow-lg p-4 hover-effect">
+                    <div class="card-body text-center">
+                        <h5 class="card-title text-primary">Profile Management</h5>
+                        <p class="card-text">Update your personal details and upload required documents.</p>
+                        <a href="#" class="btn btn-outline-primary btn-block">Manage Profile</a>
+                    </div>
                 </div>
             </div>
             <div class="col-md-4">
-                <div class="card p-3">
-                    <h5 class="card-title">ID Status</h5>
-                    <p class="card-text">Check the status of your student ID application and processing updates.</p>
-                    <a href="#" class="btn btn-primary">View Status</a>
+                <div class="card shadow-lg p-4 hover-effect">
+                    <div class="card-body text-center">
+                        <h5 class="card-title text-success">ID Status</h5>
+                        <p class="card-text">Check the status of your student ID application and processing updates.</p>
+                        <a href="#" class="btn btn-outline-success btn-block">View Status</a>
+                    </div>
                 </div>
             </div>
             <div class="col-md-4">
-                <div class="card p-3">
-                    <h5 class="card-title">Notifications</h5>
-                    <p class="card-text">Stay updated with important announcements and messages from your institution.</p>
-                    <a href="#" class="btn btn-primary">View Notifications</a>
+                <div class="card shadow-lg p-4 hover-effect">
+                    <div class="card-body text-center">
+                        <h5 class="card-title text-warning">Notifications</h5>
+                        <p class="card-text">Stay updated with important announcements and messages from your institution.</p>
+                        <a href="#" class="btn btn-outline-warning btn-block">View Notifications</a>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <style>
+        .hover-effect:hover {
+            transform: scale(1.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        .card {
+            border: none;
+            border-radius: 15px;
+            overflow: hidden;
+        }
+        .btn-block {
+            width: 100%;
+            font-weight: bold;
+        }
+        .card-title {
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+        }
+        .card-text {
+            font-size: 0.95rem;
+            color: #6c757d;
+        }
+        .container {
+            animation: fadeIn 1s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+
+    <script>
+        document.querySelectorAll('.card').forEach(card => {
+            card.addEventListener('click', () => {
+                alert('Card clicked! Add your custom functionality here.');
+            });
+        });
+    </script>
+
 {% endblock %}

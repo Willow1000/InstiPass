@@ -10,6 +10,9 @@ from rest_framework.views import APIView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .serializers import *
 from django.shortcuts import get_object_or_404
+import requests
+import json
+from django.contrib import messages
 
 # Create your views here.
 class InstitutionViewSet(viewsets.ModelViewSet):
@@ -48,7 +51,7 @@ class UpdateInstitutionSettings(UpdateView):
     success_url = reverse_lazy("home")    
     model = InstitutionSettings
     fields = ['institution','notification_pref','template','barcode','qrcode','min_admission_year']
-    template_name = "institution/"+"register_institution_settings.html"
+    template_name = "register_institution_settings.html"
   
 class IdProcessStatsAPIView(APIView):
     def get(self, request, *args, **kwargs):
@@ -57,7 +60,7 @@ class IdProcessStatsAPIView(APIView):
             "registered_students": Student.objects.filter(institution=institution).count(),
             "Ids_in_Queue":len([id for id in IdOnQueue.objects.all() if id.student.institution==institution]),
             "Ids_being_processed": len([id for id in IdInProcess.objects.all() if id.Id.student.institution==institution]),
-            "Ids_ready": len([id for id in IdReady.objects.all() if id.Id.student.institution==institution]),
+            "Ids_ready": len([id for id in IdReady.objects.all() if id.Id.Id.student.institution==institution]),
         }
         
         return Response(data=data)
@@ -65,6 +68,31 @@ class IdProcessStatsAPIView(APIView):
 
 class HomeView(TemplateView):
     template_name = 'institution_home.html'    
+
+    def get_context_data(self,**kwargs):
+        stats = super().get_context_data(**kwargs)
+        sessionid = self.request.COOKIES.get("sessionid")
+        cookies = {
+            'sessionid':sessionid
+        }
+    
+        data = json.loads(requests.get(url = "http://127.0.0.1:8000/institution/api/institution_stats",cookies=cookies).content.decode("utf8"))
+        print(requests.get(url = "http://127.0.0.1:8000/institution/api/institution_stats",cookies=cookies).content.decode("utf8"))
+        stats['total'] = data.get("registered_students")
+        stats['process'] = data.get("Ids_being_processed")
+        stats["ready"] = data.get("Ids_ready")
+        found = Institution.objects.filter(email=self.request.user.email)
+        settings = InstitutionSettings.objects.filter(institution = found[0])
+        if found:
+            stats['exists_institution'] = True
+            stats['pk'] = found[0].pk
+
+        if settings:
+            stats['exists_settings'] = True
+            stats['s_pk'] = settings[0].pk
+
+        
+        return stats
 def custom_404_view(request, exception):
     return render(request, "404.html", status=404)
 
@@ -73,3 +101,4 @@ def custom_500_view(request):
 
 def custom_403_view(request, exception):
     return render(request, "403.html", status=403)    
+

@@ -1,13 +1,37 @@
-{% extends 'form.html' %}
+{% extends 'form_student.html' %}
 {% block title %}Student Register {% endblock %}
 {% block content %}
 
 <h1>Student Registration</h1>
-    <div style="width: 500px; padding-top: 3rem; margin-top: .1rem; padding-bottom: 3rem; min-height: auto" class="d-flex shadow-lg align-items-space-between rounded-3">
-        <form style="width: 30rem" class="d-flex gap-3 flex-column ms-5" method="POST" enctype="multipart/form-data" action="">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button style="margin: 2rem;" type="submit" class="btn btn-primary">Submit</button>
-        </form>
-    </div>
+<div style="width: 500px; padding-top: 3rem; margin-top: .1rem; padding-bottom: 3rem; min-height: auto" class="d-flex shadow-lg align-items-space-between rounded-3">
+    <form id="registrationForm" style="width: 30rem" class="d-flex gap-3 flex-column ms-5" method="POST" enctype="multipart/form-data" action="">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button style="margin: 2rem;" type="submit" class="btn btn-primary">Submit</button>
+    </form>
+    <div id="formFeedback" style="color: red; margin-top: 1rem;"></div>
+</div>
+
+<script>
+    document.getElementById('registrationForm').addEventListener('submit', function(event) {
+        const form = event.target;
+        const feedback = document.getElementById('formFeedback');
+        let isValid = true;
+        feedback.innerHTML = '';
+
+        // Example validation: Ensure all fields are filled
+        const inputs = form.querySelectorAll('input, textarea, select');
+        inputs.forEach(input => {
+            if (!input.value.trim() && input.hasAttribute('required')) {
+                isValid = false;
+                feedback.innerHTML += `<p>${input.name} is required.</p>`;
+            }
+        });
+
+        if (!isValid) {
+            event.preventDefault(); // Prevent form submission
+        }
+    });
+</script>
+
 {% endblock %}

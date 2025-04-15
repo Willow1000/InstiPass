@@ -1,14 +1,12 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{% block title %}{% endblock %}</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-  </head>
-  <body class = "min-vh-100 d-flex flex-column align-items-center min-vw-100 ">
-    {% include "navbar.html" %}
-    {% block content %}{% endblock %}
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-  </body>
-</html>
+{% extends 'form_institution.html' %}
+{% block title %} Register {% endblock %}
+{% block content %}
+<h1 class="text-center">Register Institution</h1>
+    <div style="width: 500px; padding-top: 3rem; margin-top: 2rem; padding-bottom: 3rem; height: 37rem;" class="d-flex shadow-lg align-items-space-between rounded-3">
+        <form style="width: 30rem" class="d-flex gap-3 flex-column ms-5" method="POST" enctype="multipart/form-data" action="">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button style="margin: 2rem;" type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+{% endblock %}

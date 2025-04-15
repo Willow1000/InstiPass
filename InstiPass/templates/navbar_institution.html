@@ -9,12 +9,24 @@
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="/">Home</a>
           </li>
+          {% if exists_institution %}
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href={% url 'update_institution' pk %}>Update Profile</a>
+          </li>
+          {% else %}
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="register">Create Profile</a>
           </li>
+          {% endif %}
+          {% if exists_settings %}
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href={% url 'update_institution_settings' s_pk %}>Update Settings</a>
+          </li>
+          {% else %}
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="settings/register">Create Settings</a>
           </li>
+          {% endif %}
           {% if user.is_authenticated == False %}
           <li class="nav-item">
             <a class="nav-link" href="accounts/signup/">Register</a>

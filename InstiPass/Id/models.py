@@ -14,7 +14,7 @@ class IdInProcess(models.Model):
         return f"{self.pk}"
     
 class IdReady(models.Model):
-    Id = models.OneToOneField(IdOnQueue,on_delete=models.CASCADE,primary_key=True)
+    Id = models.OneToOneField(IdInProcess,on_delete=models.CASCADE,primary_key=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

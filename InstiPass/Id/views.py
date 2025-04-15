@@ -8,7 +8,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 class CreateIdInProcess(LoginRequiredMixin,UserPassesTestMixin,CreateView):
     template_name = 'id_process.html'
     model = IdInProcess
-    success_url = reverse_lazy("home")
+    success_url = reverse_lazy("superuser_home")
     fields = [
         "Id"
     ]
@@ -20,7 +20,7 @@ class CreateIdInProcess(LoginRequiredMixin,UserPassesTestMixin,CreateView):
 class CreateIdReady(LoginRequiredMixin,UserPassesTestMixin,CreateView):
     template_name = 'id_ready.html'
     model = IdReady
-    success_url = reverse_lazy("home")
+    success_url = reverse_lazy("superuser_home")
     fields = [
         "Id"
     ]    

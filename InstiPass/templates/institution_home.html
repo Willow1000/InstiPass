@@ -2,6 +2,7 @@
 {% block title %}Institution Homepage{% endblock %}
 {% block content %}
     {% include "navbar_institution.html" %}
+  
     <section id="overview" class="container my-5">
         <div class="row">
             <div class="col-lg-12">
@@ -20,19 +21,22 @@
             <div class="col-md-4">
                 <div class="card p-3">
                     <h5>Total Students</h5>
-                    <p class="fs-4">1,235</p>
+                    <p class="fs-4" id="total-students">{{total }}</p>
+                    <button class="btn btn-primary" onclick="incrementCount('total-students')">Add Student</button>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="card p-3">
                     <h5>Pending Approvals</h5>
-                    <p class="fs-4">45</p>
+                    <p class="fs-4" id="pending-approvals">{{ process }}</p>
+                    <button class="btn btn-warning" onclick="decrementCount('pending-approvals')">Approve</button>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="card p-3">
                     <h5>Approved IDs</h5>
-                    <p class="fs-4">1,190</p>
+                    <p class="fs-4" id="approved-ids">{{ ready }}</p>
+                    <button class="btn btn-success" onclick="incrementCount('approved-ids')">Approve ID</button>
                 </div>
             </div>
         </div>
@@ -45,16 +49,46 @@
             <div class="col-lg-6">
                 <div class="card p-3">
                     <h5>Photo Validation</h5>
-                    <p>AI-powered photo validation: <strong>Enabled</strong></p>
+                    <p>AI-powered photo validation: <strong id="photo-validation-status">Enabled</strong></p>
+                    <button class="btn btn-secondary" onclick="toggleValidation()">Toggle Validation</button>
                 </div>
             </div>
             <div class="col-lg-6">
                 <div class="card p-3">
                     <h5>ID Format</h5>
-                    <p>Current Format: <strong>INST-YYYY-XXXX</strong></p>
+                    <p>Current Format: <strong id="id-format">INST-YYYY-XXXX</strong></p>
+                    <button class="btn btn-info" onclick="changeIDFormat()">Change Format</button>
                 </div>
             </div>
         </div>
     </section>
 
+    <script>
+        function incrementCount(id) {
+            const element = document.getElementById(id);
+            let count = parseInt(element.textContent.replace(/,/g, ''));
+            count++;
+            element.textContent = count.toLocaleString();
+        }
+
+        function decrementCount(id) {
+            const element = document.getElementById(id);
+            let count = parseInt(element.textContent.replace(/,/g, ''));
+            if (count > 0) {
+                count--;
+                element.textContent = count.toLocaleString();
+            }
+        }
+
+        function toggleValidation() {
+            const statusElement = document.getElementById('photo-validation-status');
+            statusElement.textContent = statusElement.textContent === 'Enabled' ? 'Disabled' : 'Enabled';
+        }
+
+        function changeIDFormat() {
+            const formatElement = document.getElementById('id-format');
+            formatElement.textContent = formatElement.textContent === 'INST-YYYY-XXXX' ? 'INST-XX-YYYY' : 'INST-YYYY-XXXX';
+        }
+        fetch("/institution/api/stats")
+    </script>
 {% endblock %}

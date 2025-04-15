@@ -9,9 +9,15 @@
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="/">Home</a>
           </li>
+          {% if exists %}
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href={% url 'update_student' pk %}>Udate Profile</a>
+          </li>
+          {% else%}
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="register">Create Profile</a>
           </li>
+          {% endif %}
           {% if user.is_authenticated == False %}
           
           <li class="nav-item">

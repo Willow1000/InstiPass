@@ -2,24 +2,85 @@
 {% block title %} Home {% endblock %}
 {% block content %}
     {% include "navbar.html" %}
-    <div class="container">
-        <h1 class="text-center">Welcome to InstiPass</h1>
-        <p class="text-center">Your one-stop solution for student ID management.</p>
-        <div class="row mt-4">
+    <div class="container mt-5">
+        <div class="text-center">
+            <h1 class="display-4 fw-bold">Welcome to <span class="text-primary">InstiPass</span></h1>
+            <p class="lead text-muted">Your one-stop solution for student ID management.</p>
+            <a href="{% url 'student_registration' %}" class="btn btn-primary btn-lg mt-3">Get Started</a>
+        </div>
+        <div class="row mt-5">
             <div class="col-md-4 text-center">
-                <h3>For Students</h3>
-                <p>Register, manage your profile, and track your ID status.</p>
-                <a href="{% url 'student_registration' %}" class="btn btn-primary">Get Started</a>
+                <div class="card shadow-sm border-0 hover-card">
+                    <div class="card-body">
+                        <div class="icon mb-3">
+                            <i class="fas fa-user-graduate fa-3x text-primary"></i>
+                        </div>
+                        <h3 class="card-title text-primary">For Students</h3>
+                        <p class="card-text text-muted">Register, manage your profile, and track your ID status.</p>
+                        <a href="{% url 'student_registration' %}" class="btn btn-outline-primary btn-hover">Get Started</a>
+                    </div>
+                </div>
             </div>
             <div class="col-md-4 text-center">
-                <h3>For Institutions</h3>
-                <p>Manage student registrations and settings efficiently.</p>
-                <a href="{% url 'institution_home' %}" class="btn btn-primary">Dashboard</a>
+                <div class="card shadow-sm border-0 hover-card">
+                    <div class="card-body">
+                        <div class="icon mb-3">
+                            <i class="fas fa-school fa-3x text-primary"></i>
+                        </div>
+                        <h3 class="card-title text-primary">For Institutions</h3>
+                        <p class="card-text text-muted">Manage student registrations and settings efficiently.</p>
+                        <a href="institution/accounts/login/?next=/institution/" class="btn btn-outline-primary btn-hover">Dashboard</a>
+                    </div>
+                </div>
             </div>
             <div class="col-md-4 text-center">
-                <h3>Contact Us</h3>
-                <p>Need help? Reach out to our support team.</p>
-                <a href='#' class="btn btn-primary">Contact Support</a>
+                <div class="card shadow-sm border-0 hover-card">
+                    <div class="card-body">
+                        <div class="icon mb-3">
+                            <i class="fas fa-envelope fa-3x text-primary"></i>
+                        </div>
+                        <h3 class="card-title text-primary">Contact Us</h3>
+                        <p class="card-text text-muted">Need help? Reach out to our support team.</p>
+                        <a href="#" class="btn btn-outline-primary btn-hover">Contact Support</a>
+                    </div>
+                </div>
             </div>
         </div>
+    </div>
+
+    <style>
+        .hover-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-radius: 15px;
+        }
+        .hover-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+        .btn-hover {
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .btn-hover:hover {
+            background-color: #007bff;
+            color: #fff;
+        }
+        .icon {
+            transition: transform 0.3s ease;
+        }
+        .hover-card:hover .icon {
+            transform: scale(1.2);
+        }
+    </style>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const cards = document.querySelectorAll('.hover-card');
+            cards.forEach(card => {
+                card.addEventListener('click', () => {
+                    card.classList.add('active');
+                    setTimeout(() => card.classList.remove('active'), 300);
+                });
+            });
+        });
+    </script>
 {% endblock %}

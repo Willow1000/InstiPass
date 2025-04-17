@@ -43,6 +43,25 @@ class APIAccessLog(models.Model):
 
     def __str__(self):
         return f"{self.user_id} {self.endpoint} {self.ip_address} {self.status_code}"
+class AccessLog(models.Model):
+    REQUEST_METHOD_CHOICES = [
+        ("GET",'GET'),
+        ("POST","POST"),
+        ('DELETE','DELETE'),
+        ("PUT","PUT"),
+        ("PATCH","PATCH")
+    ]    
+
+    id = models.UUIDField(primary_key=True,default=uuid.uuid4,editable=False)
+    endpoint = models.CharField(max_length=255)
+    request_method = models.CharField(max_length=10,choices=REQUEST_METHOD_CHOICES)
+    user_id = models.CharField(max_length=36)
+    status_code = models.IntegerField(null=True,blank=True)
+    ip_address = models.GenericIPAddressField(null=True,blank=True)
+    request_timestamp = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.user_id} {self.endpoint} {self.ip_address} {self.status_code}"
     
 class IdprogressLog(models.Model):
     Id = models.OneToOneField(IdOnQueue,on_delete=models.CASCADE)

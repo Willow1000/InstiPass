@@ -1,4 +1,4 @@
-from .models import APIAccessLog
+from .models import APIAccessLog,AccessLog
 from django.utils.deprecation import MiddlewareMixin
 
 class APILogMiddleware:
@@ -7,24 +7,33 @@ class APILogMiddleware:
 
     def __call__(self,request):
         if request.META:
+            data =request.META
             x_forwarded_for = request.META.get("HTTP_X_FORWADED_FOR")
             if x_forwarded_for:
                 ip = x_forwarded_for.split(',')[0].strip()
             else:
-                ip = request.META.get("REMOTE_ADDRR")
+                ip = request.META.get("REMOTE_ADDR")
         else:
             ip=None 
         response = self.get_response(request)
         user_id = str(request.user.id) if request.user.is_authenticated else "anonymous"
-        APIAccessLog.objects.create(
-            user_id = user_id,
-            endpoint = request.path,
-            request_method = request.method,
-            status_code = response.status_code,
-            ip_address = ip
-        )
-
+        if 'api' in request.path.lower():
+            APIAccessLog.objects.create(
+                user_id = user_id,
+                endpoint = request.path,
+                request_method = request.method,
+                status_code = response.status_code,
+                ip_address = ip
+            )
+        else:
+            AccessLog.objects.create(
+                user_id = user_id,
+                endpoint = request.path,
+                request_method = request.method,
+                status_code = response.status_code,
+                ip_address = ip
+            )
+            
         return response
 
         
-    

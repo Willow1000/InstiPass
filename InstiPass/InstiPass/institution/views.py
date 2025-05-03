@@ -42,7 +42,6 @@ class CreateInstitutionSettings(CreateView):
 
     def form_valid(self, form):
         found = Institution.objects.filter(email = self.request.user.email)
-
         if found:
             form.instance.institution = found[0]
         else:
@@ -64,8 +63,11 @@ class UpdateInstitutionSettings(UpdateView):
     template_name = "register_institution_settings.html"
   
 class IdProcessStatsAPIView(APIView):
+    permission_classes=[IsAuthenticated]
     def get(self, request, *args, **kwargs):
-        institution = get_object_or_404(Institution,email = self.request.user.email)
+        email=self.request.GET.get("q")
+        institution = get_object_or_404(Institution,email = email)
+        print(email)
         data = {
             "registered_students": Student.objects.filter(institution=institution).count(),
             "Ids_in_Queue":len([id for id in IdOnQueue.objects.all() if id.student.institution==institution]),
@@ -86,11 +88,12 @@ class HomeView(TemplateView):
             'sessionid':sessionid
         }
     
-        data = json.loads(requests.get(url = "http://127.0.0.1:8000/institution/api/institution_stats",cookies=cookies).content.decode("utf8"))
+        data = json.loads(requests.get(url = f"http://127.0.0.1:8000/institution/api/institution_stats/?q={self.request.user.email}",cookies=cookies).content.decode("utf8"))
         print(requests.get(url = "http://127.0.0.1:8000/institution/api/institution_stats",cookies=cookies).content.decode("utf8"))
         stats['total'] = data.get("registered_students")
         stats['process'] = data.get("Ids_being_processed")
         stats["ready"] = data.get("Ids_ready")
+        print(self.request.user.email)
         found = Institution.objects.filter(email=self.request.user.email)
         if found:
             stats['exists_institution'] = True

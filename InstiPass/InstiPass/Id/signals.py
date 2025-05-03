@@ -20,7 +20,7 @@ def id_processing_update(sender,instance,created,**kwargs):
     )
 @receiver(post_save,sender=IdReady,dispatch_uid = 'notify_student_and_update_ready_status')
 def id_ready_update(sender,instance,created,**kwargs):
-    Student.objects.filter(id=instance.Id.student.id).update(status="id_ready")
+    Student.objects.filter(id=instance.Id.Id.student.id).update(status="id_ready")
     IdprogressLog.objects.filter(Id = instance.Id).update(finished_processing=now())
     send_mail(
         "Your Id is ready",

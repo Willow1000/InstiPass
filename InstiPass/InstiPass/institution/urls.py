@@ -22,7 +22,7 @@ urlpatterns = [
     name="create_institution"),
     path('settings/register',CreateInstitutionSettings.as_view(),name="create_institution_settings"),
     path("api/",include(router.urls)),
-    path("api/institution_stats",IdProcessStatsAPIView.as_view(),name="id_process_stats"),
+    path("api/institution_stats/",IdProcessStatsAPIView.as_view(),name="id_process_stats"),
     path("update/<int:pk>",UpdateInstitution.as_view(),name="update_institution"),
     path("settings/update/<int:pk>",UpdateInstitutionSettings.as_view(),name="update_institution_settings"),
 ]

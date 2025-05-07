@@ -30,10 +30,13 @@ class InstitutionSettingsViewSet(viewsets.ModelViewSet):
 class CreateInstitution(CreateView):
     success_url = reverse_lazy("institution_home")    
     model = Institution
-    fields = ['name','region','county','address','email','tel','admin_email','admin_tell']
+    fields = ['name','region','county','address','tel','web_url','admin_email','admin_tell']
     template_name = "register_institution.html"
- 
-   
+    
+    def form_valid(self, form):
+        form.instance.email = self.request.user.email
+        return super().form_valid(form)
+
 class CreateInstitutionSettings(CreateView):
     success_url = reverse_lazy("institution_home")    
     model = InstitutionSettings

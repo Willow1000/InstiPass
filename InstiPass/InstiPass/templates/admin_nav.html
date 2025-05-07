@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
-      <a class="navbar-brand" href={% url 'home' %}>Instipass Admin</a>
+      <a class="navbar-brand" href={% url 'institutions_admin' %}>Instipass Admin</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -13,11 +13,21 @@
           </li>
          
         </ul>
-     
-        <form class="d-flex" role="search" action="" method="GET">
-          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="q",value="{{ request.GET.q| default:'' }}">
+        {% if institutions or students %}
+        <form class="d-flex" role="search" method="GET">
+          <!-- Preserve existing query parameters except 'querry' -->
+          {% for key, value in request.GET.items %}
+              {% if key != 'querry' %}
+                  <input type="hidden" name="{{ key }}" value="{{ value }}">
+              {% endif %}
+          {% endfor %}
+      
+          <!-- Search input for 'querry' -->
+          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"
+                 name="querry" value="{{ request.GET.querry|default:'' }}">
           <button class="btn btn-outline-success" type="submit">Search</button>
-        </form>
+      </form>
+        {% endif %}
       </div>
     </div>
   </nav>

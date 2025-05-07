@@ -58,16 +58,20 @@
             </div>
         </div>
     </div>
+    <a href="{% url 'students_admin' %}?q={{ institution.email }}">Students</a>
 
     <!-- Settings Section -->
+     {% if settings %}
     <div class="section">
         <h2>Institution Settings</h2>
         <div class="settings-box">
             <p><strong>Institution Code:</strong> </p>
             <p><strong>Template Used:</strong></p>
+            {% if setting.template %}
             <div class="template-box d-flex flex-column align-items-center">
                 <p><strong>Template Name:</strong> {{ settings.template.name }}</p>
                 <p><strong>Template URL:</strong> {{ settings.template.url }}</p>
+            {% endif %}    
             {% if settings.template.url != None %}
             <img src="{{ settings.template.url }}" alt="Template" style="width: 300px; height: auto;">
             {% endif %}
@@ -75,40 +79,9 @@
             <!-- You can add links for "Edit", "Update Template", etc. -->
         </div>
     </div>
-
-    <!-- Display image again outside settings box -->
-
-
-    <!-- Optional: Student Table -->
-    <div class="section">
-        <h2>Registered Students</h2>
-        {% if '' %}
-            <table>
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Name</th>
-                        <th>Admission No.</th>
-                        <th>Status</th>
-                        <th>Created</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for student in '' %}
-                    <tr>
-                        <td>{{ student.id }}</td>
-                        <td>{{ student.full_name }}</td>
-                        <td>{{ student.admission_number }}</td>
-                        <td>{{ student.status }}</td>
-                        <td>{{ student.created_at|date:"Y-m-d" }}</td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        {% else %}
-            <p>No students have been registered yet.</p>
-        {% endif %}
-    </div>
+    {% else %}
+    <h2>{{ institution.name }} hasn't registered their preferences</h2>
+    {% endif %}
 </div>
 
 </body>

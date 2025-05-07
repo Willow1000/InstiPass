@@ -28,12 +28,7 @@ class UserManager(BaseUserManager):
         return self.create_user(email, password, **extra_fields)
     
 class User(AbstractUser):
-    ROLE_CHOICES = [
-        ('student','Student'),
-        ('institution_admin','Institution Admin'),
-        ('superuser','Superuser')
-    ]
-    role = models.CharField(choices=ROLE_CHOICES,max_length=20,default='student')
+    role = models.CharField(max_length=20,default='student')
     permissions = models.ManyToManyField(Permission,related_name="student_user_permissions") 
     groups = models.ManyToManyField(Group,related_name="student_user_groups")   
     objects = UserManager()

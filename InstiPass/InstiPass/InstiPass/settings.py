@@ -35,8 +35,7 @@ INSTALLED_APPS = [
     # 'drf_spectacular_sidecar',
 ]
 # SECURITY
-SECRET_KEY = os.environ['SECRET_KEY']
-
+SECRET_KEY ='django-insecure-9d-7bt--r$pg#@!pvk$z8clp*wqnhl84x&lwq)=-za_malt)ic'
 # AUTHENTICATION
 ACCOUNT_FORMS = {
     'add_email': 'allauth.account.forms.AddEmailForm',
@@ -170,6 +169,7 @@ MIDDLEWARE = [
     
     'django.middleware.security.SecurityMiddleware',
     'logs.middleware.APILogMiddleware',
+    'logs.middleware.RequestMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -206,7 +206,7 @@ WSGI_APPLICATION = 'InstiPass.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'instipassdb',
+        'NAME': os.environ["DB_NAME"],
         "USER": os.environ['DB_USER'],
         "PASSWORD":os.environ["DB_PASS"],
         "HOST":os.environ["DB_HOST"],
@@ -216,6 +216,14 @@ DATABASES = {
         }
     }
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',  # This is the default engine for SQLite
+#         'NAME': BASE_DIR / 'db.sqlite3',  # The default SQLite file in your project directory
+#     }
+# }
+
 
 
 #MAIL

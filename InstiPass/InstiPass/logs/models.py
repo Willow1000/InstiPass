@@ -71,3 +71,11 @@ class IdprogressLog(models.Model):
 
     def __str__(self):
         return f"{self.Id}"
+
+class AdminActionsLog(models.Model):
+    id = models.UUIDField(primary_key=True,default=uuid.uuid4,editable=False)
+    action = models.CharField(max_length=20)
+    admin = models.ForeignKey(User,on_delete = models.CASCADE,null=True)
+    victim_type = models.CharField(max_length=20)
+    victim = models.CharField(max_length=50)
+    timestamp = models.DateTimeField(auto_now_add=True)

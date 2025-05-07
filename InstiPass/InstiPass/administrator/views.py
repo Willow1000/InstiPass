@@ -7,8 +7,10 @@ from .forms import LoginForm
 from django.shortcuts import redirect
 from institution.models import *
 import requests
+from student.models import *
 from django.shortcuts import get_object_or_404
 import json
+from django.contrib import messages
 
 
 # Create your views here.
@@ -53,7 +55,7 @@ class InstitutionadminView(UserPassesTestMixin,LoginRequiredMixin,DetailView):
         context = super().get_context_data(**kwargs)
         pk = self.kwargs.get("pk")
         institution = get_object_or_404(Institution,id = pk)
-        context['settings'] = InstitutionSettings.objects.get(institution=institution)
+        context['settings'] = InstitutionSettings.objects.filter(institution=institution).first()
     
         data = json.loads(requests.get(url = f"http://127.0.0.1:8000/institution/api/institution_stats/?q={institution.email}",cookies=cookies).content.decode("utf8"))
         print(requests.get(url = "http://127.0.0.1:8000/institution/api/institution_stats",cookies=cookies).content.decode("utf8"))
@@ -65,3 +67,46 @@ class InstitutionadminView(UserPassesTestMixin,LoginRequiredMixin,DetailView):
         return context
     def test_func(self):
             return self.request.user.is_superuser
+
+class StudentsAdminView(UserPassesTestMixin,LoginRequiredMixin,ListView):
+    model = Student
+    template_name = "admin_student.html"
+    login_url = reverse_lazy('adminLogin')
+    def get_context_data(self, **kwargs):
+        email = self.request.GET.get("q")
+        query = self.request.GET.get('querry')
+        institution = Institution.objects.filter(email=email).first()
+       
+        context = super().get_context_data(**kwargs)
+        if query:
+            context["students"] = Student.objects.filter(last_name__icontains=query , institution=institution) | Student.objects.filter(first_name__icontains=query,institution=institution) | Student.objects.filter(status__icontains = query, institution=institution) | Student.objects.filter(email__icontains = query,institution=institution) | Student.objects.filter(phone_number__icontains=query, institution=institution)
+            if not context['students']:
+                messages.warning(message = "No results match your search",request = self.request)
+        elif Student.objects.filter(institution=institution):
+            context['students'] = Student.objects.filter(institution=institution)    
+
+        else:
+            context['no_students'] = True    
+        context["institution"] = institution
+
+        return context
+    def test_func(self):
+        return self.request.user.is_superuser
+
+class DeleteInstitutionView(UserPassesTestMixin,LoginRequiredMixin,DeleteView):
+    model = Institution
+    success_url = reverse_lazy("institutions_admin")
+    def test_func(self):
+        return self.request.user.is_superuser
+
+class DeleteStudentView(UserPassesTestMixin,LoginRequiredMixin,DeleteView):
+    model = Student
+
+    def test_func(self):
+
+        return self.request.user.is_superuser
+    def get_success_url(self):
+        next_url = self.request.GET.get('next')
+        return next_url 
+
+        

@@ -19,6 +19,8 @@ def welcome_mail(sender,instance,created,**kwargs):
             recipient_list=[instance.email],
             fail_silently=False,
         )
+        # instance.objects(role = "Institution")
+    else:
         send_mail(
             subject="Welcome",
             message=(

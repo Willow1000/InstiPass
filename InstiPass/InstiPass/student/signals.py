@@ -1,10 +1,11 @@
 from django.dispatch import receiver
 from .models import *
 from Id.models import IdOnQueue
-from django.db.models.signals import post_save
+from django.db.models.signals import post_save,post_delete
 from django.utils import timezone
 from django.core.mail import send_mail
-from logs.models import IdprogressLog
+from logs.models import IdprogressLog,AdminActionsLog
+from logs.middleware import get_current_request
 @receiver(post_save,sender=Student,dispatch_uid="update_status")
 def application_received(sender,instance,created,**kwargs):
     if created:
@@ -26,3 +27,14 @@ def application_received(sender,instance,created,**kwargs):
                 [instance.email],
                 fail_silently=False
             )
+@receiver(post_delete,sender=Student,dispatch_uid="student_deleted")
+def delete_student(sender,instance,**kwargs):
+    request = get_current_request()
+    user = request.user if request else None
+    AdminActionsLog.objects.create(
+        action = "DELETE",
+        admin = user,
+        victim_type= "STUDENT",
+        victim = f"{instance.id} {instance.first_name} {instance.last_name} "
+
+    )

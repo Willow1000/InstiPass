@@ -27,15 +27,20 @@ class UserManager(BaseUserManager):
 
         return self.create_user(email, password, **extra_fields)
     
+
 class User(AbstractUser):
-    role = models.CharField(max_length=20,default='student')
-    permissions = models.ManyToManyField(Permission,related_name="student_user_permissions") 
-    groups = models.ManyToManyField(Group,related_name="student_user_groups")   
+    email = models.EmailField(unique=True)  # <--- This is the key line
+    role = models.CharField(max_length=20)
+    permissions = models.ManyToManyField(Permission, related_name="student_user_permissions")
+    groups = models.ManyToManyField(Group, related_name="student_user_groups")
+    
     objects = UserManager()
+    # USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['email']
 
     def __str__(self):
         return self.username
+
     
 
     

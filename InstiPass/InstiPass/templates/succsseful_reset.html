@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block title %}Password Reset Complete{% endblock %}
+
+{% block content %}
+<div class="container d-flex justify-content-center align-items-center min-vh-100">
+    <div class="card shadow-lg rounded w-100" style="max-width: 500px;">
+        <div class="card-body">
+            <h3 class="card-title text-center text-success mb-4">Password Reset Successful!</h3>
+            
+            <p class="text-center">
+                Congratulations, your password has been successfully reset.
+            </p>
+            <p class="text-center mt-3">
+                You can now log in with your new password. Please click the button below to go to the login page.
+            </p>
+            
+            <div class="text-center mt-4">
+                <a href="{% url 'login' %}" class="btn btn-success w-100 py-2" style="border-radius: 25px;">Go to Login</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -13,7 +13,7 @@ def welcome_mail(sender,instance,created,**kwargs):
             message=(
                 f"Thank you {instance.username} for signing up!\n\n"
                 "Please log in to your account using the following link:\n"
-                "http://127.0.0.1:8000/student/accounts/login/?next=/student/"
+                "http://127.0.0.1:8000/login/?next=/institution/"
             ),
             from_email="admin@django.com",
             recipient_list=[instance.email],
@@ -26,7 +26,7 @@ def welcome_mail(sender,instance,created,**kwargs):
             message=(
                 f"Thank you {instance.username} for signing up!\n\n"
                 "Please log in to your account using the following link:\n"
-                "http://127.0.0.1:8000/student/accounts/login/?next=/student/"
+                "http://127.0.0.1:8000/login/?next=/student/"
             ),
             from_email="admin@django.com",
             recipient_list=[instance.email],

@@ -9,7 +9,8 @@
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" href={% url 'institutions_admin' %}>Institutions</a>
           <li>
-            <a class="nav-link" href='/' title="logout">Logout</a>
+            <a class="nav-link active" aria-current="page"  href="{% url 'adminLogout' %}?next=institutions">Logout</a>
+
           </li>
          
         </ul>

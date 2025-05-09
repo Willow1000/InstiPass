@@ -34,7 +34,7 @@ class InstituttionsView(UserPassesTestMixin,LoginRequiredMixin,ListView):
         login_url = reverse_lazy('adminLogin')
 
         def get_queryset(self):
-            query = self.request.GET.get('q')
+            query = self.request.GET.get('querry')
             if query:
                 return Institution.objects.filter(name__icontains=query) | Institution.objects.filter(region__icontains=query) | Institution.objects.filter(county__icontains=query)
             return Institution.objects.all()
@@ -109,4 +109,8 @@ class DeleteStudentView(UserPassesTestMixin,LoginRequiredMixin,DeleteView):
         next_url = self.request.GET.get('next')
         return next_url 
 
-        
+class LogoutView(LogoutView):
+    next_page = "/super/login?next=institutions"   
+    def dispatch(self, request, *args, **kwargs):
+        logout(request)  # Ensure session is cleared
+        return redirect(self.next_page)

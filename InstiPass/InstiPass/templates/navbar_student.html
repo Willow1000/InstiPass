@@ -18,19 +18,12 @@
             <a class="nav-link active" aria-current="page" href="register">Create Profile</a>
           </li>
           {% endif %}
-          {% if user.is_authenticated == False %}
           
+         
           <li class="nav-item">
-            <a class="nav-link" href="accounts/signup/">Register</a>
+            <a class="nav-link" href="logout">Logout</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="accounts/login/">Login</a>
-          </li>
-          {% else %}
-          <li class="nav-item">
-            <a class="nav-link" href="accounts/logout">Logout</a>
-          </li>
-          {% endif %}
+          
           <li class="nav-item">
             <a class="nav-link" href="/about">About</a>
           </li>

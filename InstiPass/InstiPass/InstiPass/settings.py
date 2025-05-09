@@ -18,16 +18,20 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'administrator',
+    'django_recaptcha',
+    'axes',
+    
     'accounts',
     'institution',
     'student',
     'logs',
     'Id',
     'rest_framework',
-    'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
-    'allauth.socialaccount.providers.google',
+    
+    # 'allauth', 
+    # 'allauth.account',
+    # 'allauth.socialaccount',
+    # 'allauth.socialaccount.providers.google',
     # 'rest_framework.authtoken',
     'rest_framework_simplejwt',
     'rest_framework_simplejwt.token_blacklist', 
@@ -60,8 +64,10 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 AUTHENTICATION_BACKENDS = [
-    "django.contrib.auth.backends.ModelBackend",
-    "allauth.account.auth_backends.AuthenticationBackend",
+    "axes.backends.AxesBackend",
+    "accounts.forms.EmailBackend",
+    # "django.contrib.auth.backends.ModelBackend",
+    # "allauth.account.auth_backends.AuthenticationBackend",
 ]
 # ALLAUTH SETTINGS
 LOGIN_REDIRECT_URL = "/"
@@ -88,6 +94,32 @@ REST_FRAMEWORK = {
     'DEFAULT_SCHEMA_CLASS':"drf_spectacular.openapi.AutoSchema",
 
 }
+# AXES SETTINGS
+# Axes settings
+
+AXES_ENABLED = True  # Enable Axes (useful for disabling during tests)
+AXES_LOGIN_FAILURE_LIMIT = 10  # Block after 5 failed attempts
+AXES_COOLOFF_TIME = 0.5  # Lockout for 30 minutes (0.5 hours)
+AXES_USERNAME_CALLABLE = lambda request, credentials: credentials.get('email')  # Use email as username
+AXES_RESET_ON_SUCCESS = True  # Reset failed attempts on successful login
+AXES_LOCKOUT_TEMPLATE = 'lockout.html'  # Custom lockout template
+AXES_ONLY_USER_OR_IP_FAILURES = True  # lock if either user OR IP exceeds limits
+
+# Customize which HTTP methods are protected (POST covers login forms)
+AXES_ONLY_ADMIN_SITE = False
+AXES_ENABLE_ADMIN = True
+AXES_LOCKOUT_PARAMETERS = ['username', 'ip_address', 'user_agent']
+
+# Optional: Limit lockout to POST requests only
+AXES_ONLY_ATTEMPTS_POST = True
+
+# RECAPTCHA
+RECAPTCHA_PUBLIC_KEY = os.environ['CAPTCHA_SITE_KEY']
+RECAPTCHA_PRIVATE_KEY = os.environ['CAPTCHA_SECRET_KEY']
+RECAPTCHA_USE_SSL = True
+# CAPTCHA_TEST_MODE = True
+NOCAPTCHA = True
+
 
 # JWT SETTINGS
 SIMPLE_JWT = {
@@ -174,9 +206,10 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    "axes.middleware.AxesMiddleware",
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'allauth.account.middleware.AccountMiddleware',
+    # 'allauth.account.middleware.AccountMiddleware',
     
 ]
 

@@ -1,0 +1,48 @@
+{% extends 'auth.html' %}
+{% block title %}Login{% endblock %}
+
+{% block content %}
+<div class="container d-flex justify-content-center align-items-center min-vh-100">
+    <div class="card shadow-lg p-4 bg-light w-100" style="max-width: 500px;">
+        <h3 class="text-center mb-4 text-primary">Welcome Back</h3>
+
+        <form method="POST" novalidate>
+            {% csrf_token %}
+
+            {% if messages %}
+                <div class="mb-3">
+                    {% for message in messages %}
+                        <div class="alert alert-{{ message.tags|default:"info" }} alert-dismissible fade show" role="alert">
+                            <strong>{{ message.tags|capfirst }}:</strong> {{ message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            {{ form.as_p }}
+
+            <div class="mb-3 text-end">
+                <a href="/password-reset" class="small text-muted text-decoration-none">Forgot password?</a>
+            </div>
+
+            <div class="d-grid mb-3">
+                <button type="submit" class="btn btn-primary">Login</button>
+            </div>
+            {% if form.captcha %}
+    <script src='https://www.google.com/recaptcha/api.js' async defer></script>
+{% endif %}
+</form>
+
+{% if form.captcha %}
+    <script src='https://www.google.com/recaptcha/api.js' async defer></script>
+{% endif %}
+            <div class="text-center mt-3">
+                <p class="mb-0 small">Don't have an account?
+                    <a href="{% url 'signup' %}" class="text-decoration-none text-primary">Sign up</a>
+                </p>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

@@ -6,15 +6,22 @@ from django.urls import reverse_lazy
 from .models import *
 from Id.models import *
 from rest_framework.response import Response
+from django.contrib.auth.views import LogoutView
 from rest_framework.views import APIView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .serializers import *
 from django.shortcuts import get_object_or_404,redirect
 import requests
+from django.contrib.auth import logout
 import json
 from django.contrib import messages
 
 # Create your views here.
+class LogoutView(LogoutView):
+    next_page = reverse_lazy("login")    
+    def dispatch(self, request, *args, **kwargs):
+        logout(request)  # Ensure session is cleared
+        return redirect(self.next_page)
 class InstitutionViewSet(viewsets.ModelViewSet):
     queryset = Institution.objects.all()
     serializer_class = InstitutionSerializer
@@ -27,9 +34,11 @@ class InstitutionSettingsViewSet(viewsets.ModelViewSet):
     http_method_names = ['get','post','put','patch','delete']
     permission_classes = [IsAuthenticated]
 
-class CreateInstitution(CreateView):
+class CreateInstitution(LoginRequiredMixin,CreateView):
     success_url = reverse_lazy("institution_home")    
     model = Institution
+    login_url = "login"
+    redirect_field_name = "next"
     fields = ['name','region','county','address','tel','web_url','admin_email','admin_tell']
     template_name = "register_institution.html"
     
@@ -37,9 +46,11 @@ class CreateInstitution(CreateView):
         form.instance.email = self.request.user.email
         return super().form_valid(form)
 
-class CreateInstitutionSettings(CreateView):
+class CreateInstitutionSettings(LoginRequiredMixin,CreateView):
     success_url = reverse_lazy("institution_home")    
     model = InstitutionSettings
+    login_url = "login"
+    redirect_field_name = "next"
     fields = ['notification_pref','template','barcode','qrcode','min_admission_year']
     template_name = "register_institution_settings.html"    
 
@@ -53,18 +64,21 @@ class CreateInstitutionSettings(CreateView):
         return super().form_valid(form)
  
 
-class UpdateInstitution(UpdateView):
+class UpdateInstitution(LoginRequiredMixin,UpdateView):
     success_url = reverse_lazy("home")    
     model = Institution
+    login_url = "login"
+    redirect_field_name = "next"
     fields = ['name','region','county','address','email','tel']
     template_name = "register_institution.html"
  
-class UpdateInstitutionSettings(UpdateView):
+class UpdateInstitutionSettings(LoginRequiredMixin,UpdateView):
     success_url = reverse_lazy("home")    
     model = InstitutionSettings
     fields = ['notification_pref','template','barcode','qrcode','min_admission_year']
     template_name = "register_institution_settings.html"
-  
+    login_url='login'
+    redirect_field_name = "next"
 class IdProcessStatsAPIView(APIView):
     permission_classes=[IsAuthenticated]
     def get(self, request, *args, **kwargs):
@@ -81,9 +95,10 @@ class IdProcessStatsAPIView(APIView):
         return Response(data=data)
         
 
-class HomeView(TemplateView):
+class HomeView(LoginRequiredMixin,TemplateView):
     template_name = 'institution_home.html'    
-
+    login_url = "login"
+    redirect_field_name = "next"
     def get_context_data(self,**kwargs):
         stats = super().get_context_data(**kwargs)
         sessionid = self.request.COOKIES.get("sessionid")
